@@ -8,8 +8,11 @@ from src.planner import SchemaPlanner
 st.set_page_config(page_title="Data Eng Copilot", layout="wide")
 
 # Ensure API Key is available
-if "GROQ_API_KEY" not in os.environ:
-    os.environ["GROQ_API_KEY"] = st.secrets.get("GROQ_API_KEY", "")
+if "GROQ_API_KEY" in st.secrets:
+    os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
+else:
+    st.error("GROQ_API_KEY not found in Streamlit Secrets. Please configure it.")
+    st.stop()
 
 st.title("Data Engineering Agent (Version 1)")
 
